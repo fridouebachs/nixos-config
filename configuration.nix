@@ -32,8 +32,17 @@
     };
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [ "amdgpu.dc=1" ];
+  # LTS Kernel ist stabiler für Erstinstallation
+  boot.kernelPackages = pkgs.linuxPackages;
+  # Konsole früh verfügbar machen + AMD GPU
+  boot.kernelParams = [
+    "amdgpu.dc=1"
+    "console=tty1"
+  ];
+  # Plymouth deaktivieren für sichtbare Boot-Meldungen
+  boot.plymouth.enable = false;
+  # Kernel-Meldungen auf Konsole
+  boot.consoleLogLevel = 3;
 
   # ============================================================
   # Netzwerk
@@ -114,11 +123,13 @@
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  # SDDM als Display-Manager (wie Fedora Sway Spin)
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-  };
+  # Erstmal TTY-Login statt SDDM (sicherer für Erstinstallation)
+  # Nach erfolgreichem Boot: sway manuell starten mit "sway"
+  # SDDM kann später wieder aktiviert werden
+  services.displayManager.sddm.enable = false;
+
+  # Getty (TTY Login) auf allen Konsolen sicherstellen
+  services.getty.autologinUser = null;
 
   # ============================================================
   # Audio: PipeWire
@@ -164,7 +175,7 @@
 
   # Gnome Keyring fuer Secrets
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.sddm.enableGnomeKeyring = true;
+  security.pam.services.login.enableGnomeKeyring = true;
 
   # Polkit
   security.polkit.enable = true;

@@ -42,24 +42,22 @@
   };
 
   # --- Swap ---
-  swapDevices = [
-    { device = "/swapfile"; size = 35 * 1024; }
-  ];
+  # Swapfile auf btrfs ist problematisch - erstmal nur zram verwenden
+  # Swap-Partition kann später eingerichtet werden
+  swapDevices = [ ];
 
-  # --- zram ---
+  # --- zram (komprimierter RAM-Swap) ---
   zramSwap = {
     enable = true;
-    memoryPercent = 25;   # ~8GB bei 32GB RAM
-    algorithm = "lzo-rle";
+    memoryPercent = 50;   # Mehr zram da kein swapfile
+    algorithm = "zstd";
   };
 
   # --- AMD GPU ---
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [
-      amdvlk
-      mesa
-    ];
+    enable32Bit = true;
+    # Mesa reicht aus - amdvlk kann Konflikte verursachen
   };
 
   # --- CPU ---
