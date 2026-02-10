@@ -128,8 +128,6 @@
   # SDDM kann später wieder aktiviert werden
   services.displayManager.sddm.enable = false;
 
-  # Getty (TTY Login) auf allen Konsolen sicherstellen
-  services.getty.autologinUser = null;
 
   # ============================================================
   # Audio: PipeWire
