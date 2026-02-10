@@ -252,9 +252,6 @@
     # --- VPN ---
     protonvpn-gui
 
-    # --- AI ---
-    claude-code
-
     # --- E-Mail ---
     claws-mail
 
