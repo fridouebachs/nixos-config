@@ -33,6 +33,7 @@
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = [ "amdgpu.dc=1" ];
 
   # ============================================================
   # Netzwerk
