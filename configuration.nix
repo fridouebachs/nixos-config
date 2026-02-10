@@ -130,8 +130,6 @@
     jack.enable = true;
     wireplumber.enable = true;
   };
-  # PulseAudio deaktivieren (PipeWire uebernimmt)
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
   # ============================================================
